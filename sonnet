@@ -216,14 +216,16 @@ class MakeReleaseCommand(Command):
     def check_system(self, pythons):
         for version, python in sorted(pythons.items()):
             try:
-                subprocess.check_output(
-                    [python, "-V"], stderr=subprocess.STDOUT, shell=WINDOWS
-                )
+                output = subprocess.check_output([python, "-V"], shell=WINDOWS)
+                print(output)
                 if version == "3.4" and WINDOWS:
                     continue
 
                 subprocess.check_output([python, "-m", "pip", "install", "pip", "-U"])
-            except subprocess.CalledProcessError:
+            except subprocess.CalledProcessError as e:
+                print(e)
+                print(e.stdout)
+                print(e.stderr)
                 raise RuntimeError("Python {} is not available".format(version))
 
     def vendorize_for_python(self, python, packages, dest, python_version):
