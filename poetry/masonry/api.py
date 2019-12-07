@@ -22,11 +22,7 @@ def get_requires_for_build_wheel(config_settings=None):
     """
     Returns a list of requirements for building, as strings
     """
-    poetry = Factory().create_poetry(Path("."))
-
-    main, _ = SdistBuilder.convert_dependencies(poetry.package, poetry.package.requires)
-
-    return main
+    return []
 
 
 # For now, we require all dependencies to build either a wheel or an sdist.
